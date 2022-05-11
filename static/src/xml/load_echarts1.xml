@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<templates id="custom_page.EchartPage2" xml:space="preserve">
+
+        <div id="app2" class="mt-2">
+            <ul>
+                <t t-foreach="widget.dashboard_data['x_data']" t-as="i">
+                    <li><t t-esc="i"/></li>
+                </t>
+            </ul>
+        </div>
+
+</templates>
+
+
+
+
