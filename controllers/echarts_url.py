@@ -33,10 +33,36 @@ class Academy(http.Controller):
 
     @http.route(['/custom_page/data'], auth='public', type='json', methods=['GET', 'POST'])
     def index(self, **kw):
-        x_data = ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-        y_data = list(range(10000))
-        random.shuffle(x_data)
+
+        start_millise = kw['start_time']
+        end_millise = kw['end_time']
+        start_time = datetime.datetime.fromtimestamp(start_millise / 1000.0)
+        end_time = datetime.datetime.fromtimestamp(end_millise / 1000.0)
+
+        domain = [('sale_order_type', 'in', ['new', 'conversion']),
+                  ('create_date', '>=', start_time), ('create_date', '<=', end_time)]
+        orders = request.env['sale.order'].sudo().search(domain)
+        agent_dict = {}
+        agent_saas_fee = {}
+        for order in orders:
+            if order.x_studio_many2one_field_8mpil.name:
+                agent_dict[order.x_studio_many2one_field_8mpil.name] = agent_dict.get(order.x_studio_many2one_field_8mpil.name, 0) + 1;
+                subscription_total = 0
+                for item in order.order_line:
+                    if 'Subscription' in item.name:
+                        subscription_total = subscription_total + item.price_total
+                agent_saas_fee[order.x_studio_many2one_field_8mpil.name] = agent_saas_fee.get(order.x_studio_many2one_field_8mpil.name, 0) + subscription_total;
+
+        data = []
+        for key in agent_dict:
+            tmp = {'name': key, 'value': agent_dict[key]}
+            data.append(tmp)
+
+        agent_saas_fee_data = []
+        for key in agent_saas_fee:
+            tmp = {'name': key, 'value': agent_saas_fee[key]}
+            agent_saas_fee_data.append(tmp)
         return {
-            'x_data': x_data,
-            'y_data': random.choices(y_data, k=len(x_data)),
+            'data': data,
+            'agent_saas_fee_data': agent_saas_fee_data
         }
