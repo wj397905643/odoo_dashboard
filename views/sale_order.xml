@@ -3,11 +3,14 @@
     <data>
          <template id="load_echarts_sale_order_data" name="my model echarts data" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
-                <script type="text/javascript" src="/dashboard/static/src/js/echarts.min.js"></script>
-                <script type="text/javascript" src="/dashboard/static/src/js/china.js"></script>
-                <script type="text/javascript" src="/dashboard/static/src/js/load_echarts.js"></script>
+                <script type="text/javascript" src="/zbs_dashboard_chart/static/src/js/echarts.min.js"></script>
+                <script type="text/javascript" src="/zbs_dashboard_chart/static/src/js/china.js"></script>
+                <script type="text/javascript" src="/zbs_dashboard_chart/static/src/js/load_echarts.js"></script>
+
 
             </xpath>
         </template>
+
+
     </data>
 </odoo>

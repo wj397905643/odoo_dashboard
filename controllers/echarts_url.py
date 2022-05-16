@@ -64,5 +64,6 @@ class Academy(http.Controller):
             agent_saas_fee_data.append(tmp)
         return {
             'data': data,
-            'agent_saas_fee_data': agent_saas_fee_data
+            'agent_saas_fee_data': agent_saas_fee_data,
+            'record_count': len(orders)
         }
